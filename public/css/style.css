@@ -1,0 +1,449 @@
+/* public/css/style.css */
+body {
+    background-color: #FAFAFA; /* Blanc cassé */
+    color: #4B5563; /* Gris foncé */
+    font-family: sans-serif;
+}
+
+nav {
+    background-color: #1E3A8A; /* Bleu profond */
+    color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 1.5rem;
+}
+
+nav a:hover {
+    color: #F97316; /* Orange doux */
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.card {
+    background-color: #F5E8C7; /* Beige clair */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Effet de survol */
+}
+
+.table-container {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #1E3A8A; /* Bleu profond */
+    color: white;
+}
+
+th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+    background-color: #F5E8C7; /* Beige clair au survol */
+}
+
+.button {
+    background-color: #F97316; /* Orange doux */
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.button:hover {
+    background-color: #e65c00; /* Orange plus foncé */
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}
+
+.book-image {
+    width: 100%;
+    height: 10rem; /* Réduit à 160px pour mieux s’adapter */
+    object-fit: contain; /* Affiche l’image entière sans couper */
+    border-radius: 0.5rem;
+    background-color: #f0f0f0; /* Fond léger si l’image est transparente */
+}
+
+.book-image-preview {
+    width: 8rem; /* 128px */
+    height: 8rem; /* 128px */
+    object-fit: cover;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.success-message {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.error-message {
+    color: #dc2626;
+    margin-top: 1rem;
+}
+
+.text-yellow-600 {
+    color: #d97706; /* Jaune pour "Archiver" */
+}
+
+.text-yellow-600:hover {
+    text-decoration: underline;
+}
+
+.text-green-600 {
+    color: #16a34a; /* Vert pour "Désarchiver" */
+}
+
+.text-green-600:hover {
+    text-decoration: underline;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.grid > div {
+    flex: 1 1 calc(33.333% - 1.5rem); /* 3 colonnes sur grand écran */
+}
+
+@media (max-width: 768px) {
+    .grid > div {
+        flex: 1 1 calc(50% - 1.5rem); /* 2 colonnes sur tablette */
+    }
+}
+
+@media (max-width: 480px) {
+    .grid > div {
+        flex: 1 1 100%; /* 1 colonne sur mobile */
+    }
+}
+
+/* Nouveaux styles pour le catalogue */
+/* public/css/style.css */
+.book-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #1E3A8A; /* Bleu profond */
+    color: white; /* Texte blanc pour contraste */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.book-card:hover {
+    transform: translateY(-5px); /* Effet de survol */
+}
+
+.book-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    color: white; /* Titre en blanc */
+}
+
+.book-card p {
+    margin: 0.25rem 0;
+    color: #F5E8C7; /* Beige clair pour les sous-textes */
+}
+
+.book-card .font-bold {
+    color: #F97316; /* Orange doux pour le prix */
+}
+
+.book-card .text-sm {
+    color: #F5E8C7; /* Beige clair pour le stock */
+}
+
+.book-card label {
+    color: #F5E8C7; /* Beige clair pour le label */
+}
+
+.quantity-input {
+    width: 4rem; /* 64px */
+    display: inline-block;
+    margin-right: 0.5rem;
+    background-color: #F5E8C7; /* Beige clair */
+    border: 1px solid #1E3A8A; /* Bordure bleu profond */
+    color: #1E3A8A; /* Texte bleu profond */
+}
+
+.book-card .book-image.bg-gray-200 {
+    background-color: #2b4b9b; /* Bleu légèrement plus clair */
+    color: #F5E8C7; /* Texte beige clair */
+}
+
+.grid-cols-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.md\:grid-cols-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+    .md\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+.col-span-1 {
+    grid-column: span 1;
+}
+
+.md\:col-span-3 {
+    grid-column: span 3;
+}
+
+@media (max-width: 768px) {
+    .md\:col-span-3 {
+        grid-column: span 1;
+    }
+}
+
+.book-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    color: white; /* Titre en blanc */
+}
+
+.book-card h2 a {
+    color: white; /* S’assurer que le lien reste blanc */
+    text-decoration: none;
+}
+
+.book-card h2 a:hover {
+    text-decoration: underline;
+}
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #1E3A8A; /* Bleu profond */
+    color: white; /* Texte blanc pour contraste */
+    padding: 0.25rem; /* Réduit pour que l’image prenne plus de place */
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.book-card:hover {
+    transform: translateY(-5px); /* Effet de survol */
+}
+
+.book-card .book-image {
+    width: 100%;
+    height: 14rem;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    background-color: white; /* Fond blanc */
+    padding: 1rem; /* Augmenté pour un cadre blanc plus large */
+    box-sizing: border-box;
+}
+
+/* Surcharge pour le placeholder "Pas d’image" */
+.book-card .book-image.bg-gray-200 {
+    background-color: white; /* Fond blanc pour le placeholder */
+    color: #1E3A8A; /* Texte bleu profond pour "Pas d’image" */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.book-card:hover {
+    transform: translateY(-5px); /* Effet de survol */
+}
+
+.book-card .book-image {
+    width: 100%;
+    height: 14rem; /* Augmenté à 224px pour une image plus grande */
+    object-fit: contain;
+    border-radius: 0.5rem;
+    background-color: #f0f0f0;
+}
+
+.book-card .book-details {
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.book-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    color: white;
+}
+
+.book-card h2 a {
+    color: white;
+    text-decoration: none;
+}
+
+.book-card h2 a:hover {
+    text-decoration: underline;
+}
+
+.book-card p {
+    margin: 0.25rem 0;
+    color: #F5E8C7; /* Beige clair pour les sous-textes */
+}
+
+.book-card .font-bold {
+    color: #F97316; /* Orange doux pour le prix */
+}
+
+.book-card .text-sm {
+    color: #F5E8C7; /* Beige clair pour le stock */
+}
+
+.book-card label {
+    color: #F5E8C7; /* Beige clair pour le label */
+}
+
+.filter-card {
+    background-color: #1E3A8A; /* Bleu profond */
+    color: white; /* Texte blanc */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.filter-card label {
+    color: #F5E8C7; /* Beige clair pour les labels */
+}
+
+.filter-card input {
+    background-color: #F5E8C7; /* Beige clair pour les champs */
+    color: #1E3A8A; /* Texte bleu profond */
+    border: 1px solid #1E3A8A;
+}
+.filter-card {
+    background-color: #1E3A8A; /* Bleu profond */
+    color: white; /* Texte blanc */
+    padding: 0.75rem; /* Réduit de 1rem à 0.75rem */
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem; /* Réduit de 1rem à 0.5rem */
+    color: white;
+}
+
+.filter-card {
+    background-color: #1E3A8A; /* Bleu profond */
+    color: white; /* Texte blanc */
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.filter-card label {
+    color: #F5E8C7; /* Beige clair pour les labels */
+}
+
+.filter-card input {
+    background-color: #F5E8C7; /* Beige clair pour les champs */
+    color: #1E3A8A; /* Texte bleu profond */
+    border: 1px solid #1E3A8A;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+}
+
+.filter-form {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espacement entre les éléments */
+    flex-wrap: wrap; /* Permet de passer à la ligne si l’écran est trop petit */
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espacement entre le label et l’input */
+}
+
+.filter-group label {
+    white-space: nowrap; /* Empêche le label de passer à la ligne */
+}
+
+.filter-group input {
+    width: 8rem; /* Largeur fixe pour les champs */
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem; /* Espacement entre les boutons */
+}
