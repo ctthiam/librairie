@@ -17,4 +17,10 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class);
     }
+
+    // Nouvelle méthode pour vérifier si la commande est payée
+    public function isPaid()
+    {
+        return $this->payment !== null;
+    }
 }

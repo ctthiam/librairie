@@ -85,23 +85,37 @@ class OrderController extends Controller
 
     // Créer la commande depuis le panier
     public function store(Request $request)
-    {
-        $cart = session('cart', []);
-        if (empty($cart)) {
-            return redirect()->route('orders.catalog')->withErrors('Le panier est vide.');
-        }
-
-        $order = Order::create(['status' => 'en attente']);
-        foreach ($cart as $item) {
-            $book = Book::find($item['id']);
-            $order->books()->attach($book->id, ['quantity' => $item['quantity']]);
-            $book->stock -= $item['quantity'];
-            $book->save();
-        }
-
-        session()->forget('cart'); // Vide le panier
-        return redirect()->route('orders.show', $order)->with('success', 'Commande créée avec succès !');
+{
+    $cart = session('cart', []);
+    if (empty($cart)) {
+        return redirect()->route('orders.catalog')->withErrors('Le panier est vide.');
     }
+
+    $order = Order::create(['status' => 'en attente']);
+    foreach ($cart as $item) {
+        $book = Book::find($item['id']);
+        $order->books()->attach($book->id, ['quantity' => $item['quantity']]);
+        $book->stock -= $item['quantity'];
+        $book->save();
+    }
+
+    // Envoyer l'e-mail de confirmation
+    if (auth()->check()) {
+        try {
+            $order->load('books'); // Charger la relation books
+            \Log::info('Envoi de l\'e-mail de confirmation pour la commande #' . $order->id . ' à ' . auth()->user()->email);
+            \Mail::to(auth()->user()->email)->send(new \App\Mail\OrderConfirmation($order));
+            \Log::info('E-mail de confirmation envoyé pour la commande #' . $order->id);
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de l\'envoi de l\'e-mail pour la commande #' . $order->id . ': ' . $e->getMessage());
+        }
+    } else {
+        \Log::warning('Aucun utilisateur connecté pour envoyer l\'e-mail de confirmation pour la commande #' . $order->id);
+    }
+
+    session()->forget('cart');
+    return redirect()->route('orders.show', $order)->with('success', 'Commande créée avec succès !');
+}
 
     public function show(Order $order)
     {
@@ -130,5 +144,47 @@ class OrderController extends Controller
         $order->delete();
 
         return redirect()->route('orders.index')->with('success', 'Commande annulée !');
+    }
+
+    public function pay(Request $request, Order $order)
+    {
+        \Log::info('Méthode pay appelée pour la commande #' . $order->id . ', méthode: ' . $request->method());
+    
+        // Si la requête est GET, afficher le formulaire
+        if ($request->isMethod('get')) {
+            return view('orders.pay', compact('order'));
+        }
+    
+        // Pour POST, traiter le paiement
+        // Vérifier si la commande est déjà payée
+        if ($order->isPaid()) {
+            \Log::warning('Tentative de paiement pour une commande déjà payée #' . $order->id);
+            return redirect()->route('orders.show', $order)->withErrors('Cette commande est déjà payée.');
+        }
+    
+        // Valider les données
+        $request->validate([
+            'amount' => 'required|numeric|min:0',
+        ]);
+    
+        // Créer le paiement
+        try {
+            $payment = new Payment([
+                'order_id' => $order->id,
+                'amount' => $request->amount,
+                'payment_date' => now(),
+            ]);
+            $payment->save();
+    
+            // Mettre à jour le statut de la commande
+            $order->status = 'payée';
+            $order->save();
+    
+            \Log::info('Paiement enregistré pour la commande #' . $order->id . ', montant: ' . $request->amount);
+            return redirect()->route('orders.show', $order)->with('success', 'Paiement enregistré avec succès !');
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de l\'enregistrement du paiement pour la commande #' . $order->id . ': ' . $e->getMessage());
+            return redirect()->route('orders.show', $order)->withErrors('Une erreur s\'est produite lors de l\'enregistrement du paiement.');
+        }
     }
 }
